@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#wrap {
+	width: 400px;
+	height: 700px;
+	margin: 0px auto;
+	border: 1px solid black;
+	text-align: center;
+}
+
+#chat {
+	width: 320px;
+}
+
+#view {
+	border: none;
+	padding-top: 50px;
+	width: 380px;
+}
+
+#send {
+	margin-bottom: 13px;
+}
+
+h1 {
+	border-bottom: 1px dotted black;
+	text-align: center;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+	window.onload = function() {
+		if ("WebSocket" in window) {
+			var ws = new WebSocket(
+					"ws://localhost:8080/WEB_SOCKET_0611/websocket2");
+
+			
+			document.getElementById("send").onclick = function() {
+				var chat = document.getElementById("chat").value;
+				document.getElementById("chat").value = "";
+				ws.send(nick +": "+chat );			
+			}
+			ws.onopen = function() {
+				/* alert("연결되었습니다"); */
+				var nick =prompt("연결되었습니다. 닉네임을 입력하세요.")
+			}
+			ws.onmessage = function(msg, nick) {
+				document.getElementById("view").value = document
+						.getElementById("view").value
+						+ msg.data + "\n";
+			}
+
+			ws.onclose = function() {
+				
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<h1>CHAAAAAAAAAAAAAAT</h1>
+	<div id="wrap">
+
+		<textarea id="view" readonly rows=40></textarea>
+		<div id="bottom">
+			<textarea id="chat" autofocus></textarea>
+			<button id="send">전송</button>
+		</div>
+
+	</div>
+
+</body>
+</html>

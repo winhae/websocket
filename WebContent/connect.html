@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script>
+	window.onload=function(){
+		if("WebSocket" in window){
+			var ws = new WebSocket("ws://localhost:8080/WEB_SOCKET_0611/websocket");
+			
+			document.getElementById("send").onclick=function(){
+				ws.send("나는 클라이언트");
+			}
+			
+			ws.onopen=function(){
+			alert("연결되었습니다");
+			}
+			
+			ws.onmessage=function(msg){
+					alert(msg.data);
+			}
+			
+			ws.onclose= function(){ 
+				
+			}
+			
+			
+		}else{
+			alert("브라우저가 웹소켓을 지원하지 않습니다.");
+		}
+	}
+	</script>
+</head>
+<body>
+	<button id="send">send</button>
+</body>
+</html>
